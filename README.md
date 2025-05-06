@@ -6,6 +6,8 @@ A Firefox extension that allows you to capture screenshots of specific areas on 
 
 - Capture screenshots of selected areas on any webpage
 - Extract text from screenshots using Mistral AI's OCR
+- Automatic title generation for extracted text using Google Gemini API
+- Dark theme support for the manager interface
 - Store and manage extracted text and images
 - Edit, organize, and search through your OCR data
 - Export your data for backup or further processing
@@ -29,8 +31,12 @@ Once the extension is published to the Firefox Add-ons store, you can install it
 ### Setting up
 
 1. After installing the extension, click on the extension icon in the toolbar
-2. Click on "Set API Key" and enter your Mistral AI API key
+2. Click on "Manage OCR Data" and then access Settings
+3. Enter your Mistral AI API key for OCR functionality
    - You can obtain an API key from [Mistral AI's website](https://mistral.ai/)
+4. Enter your Google Gemini API key for automatic title generation
+   - You can obtain an API key from [Google AI Studio](https://aistudio.google.com/)
+5. Configure additional settings like automatic title generation and theme preferences
 
 ### Capturing Screenshots and Extracting Text
 
@@ -49,14 +55,19 @@ Once the extension is published to the Firefox Add-ons store, you can install it
    - View all your saved OCR data
    - Search through your data
    - Edit titles and extracted text
+   - Generate or regenerate titles using Gemini AI
+   - Toggle between light and dark themes
    - Delete unwanted items
    - Export your data
+   - Configure API keys and settings
 
 ## Privacy and Security
 
-- Your API key and OCR data are stored locally in your browser
+- Your API keys and OCR data are stored locally in your browser
 - Screenshots and extracted text are not sent to any server other than Mistral AI's OCR API
+- Text is only sent to Google Gemini API for title generation when that feature is used
 - The extension requires minimal permissions to function
+- No data is stored on external servers
 
 ## Development
 
@@ -86,4 +97,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - [Mistral AI](https://mistral.ai/) for providing the OCR API
+- [Google Gemini](https://ai.google.dev/gemini-api) for the title generation API
 - [Mozilla Firefox](https://www.mozilla.org/firefox/) for the WebExtensions API
