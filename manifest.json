@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Screenshot OCR",
+  "version": "1.0",
+  "description": "Capture screenshots and extract text using OCR",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["activeTab", "storage", "scripting", "tabs"],
+  "host_permissions": [
+    "https://api.mistral.ai/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "48": "icons/icon-48.png",
+      "96": "icons/icon-96.png"
+    },
+    "default_title": "Screenshot OCR"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_scripts/screenshot.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content_scripts/overlay.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "screenshot-ocr@example.com"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Screenshot OCR</h1>
+
+      <div id="main-controls">
+        <button id="capture-btn" class="btn primary">Capture Screenshot</button>
+        <button id="options-btn" class="btn secondary">Manage OCR Data</button>
+      </div>
+
+      <div id="status-container" class="hidden">
+        <div class="spinner"></div>
+        <p id="status-text">Processing...</p>
+      </div>
+
+      <div id="result-container" class="hidden">
+        <h2>Extracted Text</h2>
+        <div id="text-preview"></div>
+        <div class="button-row">
+          <button id="save-btn" class="btn primary">Save</button>
+          <button id="copy-btn" class="btn secondary">Copy to Clipboard</button>
+          <button id="discard-btn" class="btn danger">Discard</button>
+        </div>
+      </div>
+
+      <div id="error-container" class="hidden">
+        <p id="error-text" class="error"></p>
+        <button id="error-dismiss-btn" class="btn secondary">Dismiss</button>
+      </div>
+
+      <div class="footer">
+        <a href="#" id="api-key-link">Set API Key</a>
+      </div>
+    </div>
+
+    <div id="api-key-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Mistral AI API Key</h2>
+        <p>Enter your Mistral AI API key to use the OCR functionality.</p>
+        <input type="password" id="api-key-input" placeholder="Enter API key" />
+        <div id="test-result" class="hidden">
+          <p id="test-message"></p>
+        </div>
+        <div class="button-row">
+          <button id="test-api-key-btn" class="btn secondary">
+            Test Connection
+          </button>
+          <button id="save-api-key-btn" class="btn primary">Save</button>
+          <button id="cancel-api-key-btn" class="btn secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Debug Panel -->
+    <div id="debug-panel" class="hidden">
+      <h3>Debug Information</h3>
+      <div id="debug-content" class="debug-content"></div>
+      <button id="close-debug-btn" class="btn secondary">Close</button>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

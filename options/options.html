@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Screenshot OCR - Manage Data</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Screenshot OCR Manager</h1>
+        <div class="header-actions">
+          <button
+            id="theme-toggle-btn"
+            class="btn secondary icon-btn"
+            title="Toggle Dark Mode"
+          >
+            <svg
+              class="theme-icon light-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg
+              class="theme-icon dark-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+          <button id="export-btn" class="btn secondary">Export All Data</button>
+          <button id="settings-btn" class="btn secondary">Settings</button>
+        </div>
+      </header>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search extracted text..."
+        />
+        <select id="sort-select">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="az">A-Z</option>
+          <option value="za">Z-A</option>
+        </select>
+      </div>
+
+      <div class="content">
+        <div class="sidebar">
+          <div class="sidebar-header">
+            <h2>Saved Items</h2>
+            <span id="item-count">0 items</span>
+          </div>
+          <div id="items-list" class="items-list">
+            <!-- Items will be added here dynamically -->
+            <div class="empty-state">
+              <p>No OCR data found</p>
+              <p>Capture a screenshot to get started</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="main-content">
+          <div id="empty-state" class="empty-state-main">
+            <h2>No Item Selected</h2>
+            <p>Select an item from the list to view details</p>
+          </div>
+
+          <div id="item-details" class="item-details hidden">
+            <div class="item-header">
+              <h2 id="item-title">Item Title</h2>
+              <div class="item-actions">
+                <button
+                  id="generate-title-btn"
+                  class="btn primary small"
+                  title="Generate title using Gemini AI"
+                >
+                  Generate Title
+                </button>
+                <button id="edit-btn" class="btn secondary small">Edit</button>
+                <button id="delete-btn" class="btn danger small">Delete</button>
+              </div>
+            </div>
+
+            <div class="item-metadata">
+              <span id="item-date">Date: </span>
+              <span id="item-dimensions">Dimensions: </span>
+            </div>
+
+            <div class="item-content">
+              <div class="image-container">
+                <img id="item-image" src="" alt="OCR Image" />
+              </div>
+
+              <div class="text-container">
+                <h3>Extracted Text</h3>
+                <div id="item-text" class="text-content"></div>
+                <button id="copy-text-btn" class="btn secondary">
+                  Copy Text
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="edit-form" class="edit-form hidden">
+            <h2>Edit Item</h2>
+            <div class="form-group">
+              <label for="edit-title">Title</label>
+              <input type="text" id="edit-title" />
+            </div>
+            <div class="form-group">
+              <label for="edit-text">Text</label>
+              <textarea id="edit-text" rows="10"></textarea>
+            </div>
+            <div class="form-actions">
+              <button id="save-edit-btn" class="btn primary">
+                Save Changes
+              </button>
+              <button id="cancel-edit-btn" class="btn secondary">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Settings</h2>
+
+        <div class="form-group">
+          <label for="api-key-input">Mistral AI API Key (for OCR)</label>
+          <input
+            type="password"
+            id="api-key-input"
+            placeholder="Enter Mistral API key"
+          />
+          <button id="test-mistral-btn" class="btn secondary small">
+            Test Connection
+          </button>
+          <div id="mistral-test-result" class="test-result hidden">
+            <p id="mistral-test-message"></p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="gemini-api-key-input"
+            >Google Gemini API Key (for title generation)</label
+          >
+          <input
+            type="password"
+            id="gemini-api-key-input"
+            placeholder="Enter Gemini API key"
+          />
+          <button id="test-gemini-btn" class="btn secondary small">
+            Test Connection
+          </button>
+          <div id="gemini-test-result" class="test-result hidden">
+            <p id="gemini-test-message"></p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="auto-title-toggle">Auto-generate titles</label>
+          <div class="toggle-container">
+            <input
+              type="checkbox"
+              id="auto-title-toggle"
+              class="toggle-input"
+            />
+            <label for="auto-title-toggle" class="toggle-label"></label>
+            <span class="toggle-text"
+              >Automatically generate titles for new screenshots using Gemini
+              API</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Storage</label>
+          <button id="clear-data-btn" class="btn danger">Clear All Data</button>
+        </div>
+
+        <div class="form-actions">
+          <button id="save-settings-btn" class="btn primary">
+            Save Settings
+          </button>
+          <button id="close-settings-btn" class="btn secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="confirm-title">Confirm Action</h2>
+        <p id="confirm-message">Are you sure you want to proceed?</p>
+        <div class="form-actions">
+          <button id="confirm-yes-btn" class="btn danger">Yes</button>
+          <button id="confirm-no-btn" class="btn secondary">No</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="options.js"></script>
+  </body>
+</html>
